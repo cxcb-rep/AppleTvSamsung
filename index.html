@@ -54,22 +54,18 @@
       <div id="applications" class="applications"></div>
     </section>
     <section id="settings" class="settings" aria-labelledby="settings-title" hidden>
+      <header class="settings-heading">
+        <button id="settings-back" class="settings-back" type="button" aria-label="Назад">‹</button>
+        <h1 id="settings-title">Настройки</h1>
+      </header>
+      <aside class="settings-brand">
+        <div class="settings-logo" aria-hidden="true"><span class="tv-icon"><i></i>tv</span></div>
+        <p id="settings-description" class="settings-help" aria-live="polite"></p>
+      </aside>
       <div class="settings-menu">
-        <div class="settings-heading">
-          <button id="settings-back" class="settings-back" type="button" aria-label="Назад">‹</button>
-          <div>
-            <p id="settings-parent" class="settings-parent" hidden></p>
-            <h1 id="settings-title">Настройки</h1>
-          </div>
-        </div>
         <div id="settings-list" class="settings-list"></div>
         <p id="settings-detail" class="settings-detail" hidden></p>
       </div>
-      <aside class="settings-preview" aria-live="polite">
-        <span id="settings-symbol" class="settings-symbol" aria-hidden="true">⚙</span>
-        <h2 id="settings-description-title">Настройки</h2>
-        <p id="settings-description"></p>
-      </aside>
     </section>
   </main>
 </body>

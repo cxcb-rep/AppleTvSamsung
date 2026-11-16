@@ -3,12 +3,9 @@
 
   var root = document.getElementById("settings");
   var heading = document.getElementById("settings-title");
-  var parentLabel = document.getElementById("settings-parent");
   var back = document.getElementById("settings-back");
   var list = document.getElementById("settings-list");
   var detail = document.getElementById("settings-detail");
-  var previewIcon = document.getElementById("settings-symbol");
-  var previewTitle = document.getElementById("settings-description-title");
   var previewText = document.getElementById("settings-description");
   var key = "appleTvSamsung.settings";
   var definitions = {
@@ -68,8 +65,12 @@
     return { label: label, description: description, value: value };
   }
 
-  function page(label, icon, tone, description, rows) {
-    return { label: label, icon: icon, tone: tone, description: description, rows: rows };
+  function group(label) {
+    return { group: label };
+  }
+
+  function page(label, description, rows) {
+    return { label: label, description: description, rows: rows };
   }
 
   var picture = "На Samsung откройте Настройки → Изображение.";
@@ -81,92 +82,104 @@
   var network = "На Samsung откройте Настройки → Общие → Сеть.";
   var accounts = "Учётные записи Apple и подписки управляются в соответствующем приложении Apple.";
   var nativeTv = "Эта функция относится к системному меню телевизора.";
-  var privacy = page("Конфиденциальность и безопасность", "◇", "blue", "Разрешения, аналитика и данные приложения.", [
+  var privacy = page("Конфиденциальность и безопасность", "Разрешения, аналитика и данные приложения.", [
     info("Геолокация и отслеживание", "AppleTvSamsung не запрашивает геолокацию."),
     info("Камера, микрофон и фото", "AppleTvSamsung не запрашивает доступ к камере, микрофону или фотографиям."),
     info("Аналитика и улучшения", "AppleTvSamsung не отправляет данные аналитики."),
     info("Данные приложения", "Параметры AppleTvSamsung хранятся локально на этом устройстве.")
   ]);
-  var about = page("Об устройстве", "ⓘ", "blue", "Сведения о приложении и среде запуска.", [
-    info("AppleTvSamsung", "Версия приложения, установленная на устройстве.", "0.3.0"),
+  var about = page("Об устройстве", "Сведения о приложении и среде запуска.", [
+    info("AppleTvSamsung", "Версия приложения, установленная на устройстве.", "0.3.1"),
     info("Платформа", "Этот экран показывает среду, в которой открыт проект.", function () { return window.tizen ? "Samsung Tizen" : "Браузер"; }),
     info("Экран", "Размер экрана, который сообщает веб-движок, в логических пикселях.", function () { return screen.width + " × " + screen.height; }),
     info("Язык устройства", "Языковой код, который сообщает веб-движок.", function () { return navigator.language || "—"; }),
     info("Модель и версия ПО", "На Samsung откройте Настройки → Поддержка → Об этом телевизоре.")
   ]);
-  var reset = page("Сброс настроек приложения", "↺", "red", "Возвращает параметры AppleTvSamsung к исходным значениям.", [
+  var reset = page("Сброс настроек приложения", "Возвращает параметры AppleTvSamsung к исходным значениям.", [
     { label: "Сбросить настройки приложения", description: "Будут сброшены звуки, оформление и параметры навигации.", reset: true }
   ]);
-  var app = page("AppleTvSamsung", "▣", "blue", "Звук, оформление, управление и данные этого приложения.", [
-    option("navigationClicks"), option("transitionSounds"), option("artwork"), option("theme"),
-    option("homeOnStart"), option("alphabetical"), option("wrapFocus"), option("largeText"),
-    option("strongFocus"), option("reduceMotion"), about, reset
+  var app = page("AppleTvSamsung", "Звук, оформление, управление и данные этого приложения.", [
+    group("Звук"), option("navigationClicks"), option("transitionSounds"),
+    group("Главный экран"), option("artwork"), option("theme"), option("homeOnStart"), option("alphabetical"),
+    group("Управление и доступность"), option("wrapFocus"), option("largeText"),
+    option("strongFocus"), option("reduceMotion"),
+    group("Приложение"), about, reset
   ]);
-  var main = page("Настройки", "⚙", "", "Параметры изображения, звука, управления и приложений.", [
-    page("Основные", "⚙", "", "Заставка, оформление, язык, время и конфиденциальность.", [
+  var siri = page("Siri и поиск", "Голосовой помощник, диктовка и поиск.", [
+    info("Siri", "Siri относится к системе Apple TV. Голосовой помощник Samsung настраивается в меню телевизора, если доступен."),
+    info("Диктовка и распознавание голоса", nativeTv),
+    info("Поиск", "Поиск по каталогу доступен внутри приложения нужного сервиса.")
+  ]);
+  var main = page("Настройки", "Параметры изображения, звука, управления и приложений.", [
+    page("Основные", "Заставка, оформление, язык, время и конфиденциальность.", [
       about,
       info("Заставка", "На Samsung заставка и автоматическое выключение зависят от модели и режима энергосбережения."),
       option("theme"), option("artwork"),
       info("Сон после", general + " Найдите таймер сна или отключение при бездействии."),
       info("Язык и регион", general + " Выберите системные параметры языка."),
       info("Дата и время", general + " Откройте параметры времени."),
-      info("Хранилище", "Доступное место для приложений можно проверить в меню Apps телевизора."),
+      info("Хранилище", "Доступное место для приложений можно проверить в меню Apps телевизора."), siri,
       info("Ограничения", "Родительский контроль настраивается в системе Samsung или в самом сервисе."),
       privacy
     ]),
-    app,
-    page("Профили и учётные записи", "♟", "blue", "Профили, подписки и вход в сервисы Apple.", [
+    page("Профили и учётные записи", "Профили, подписки и вход в сервисы Apple.", [
       info("Профиль по умолчанию", accounts), info("Добавить профиль", accounts),
       info("Учётная запись Apple", accounts), info("Подписки и покупки", accounts),
       info("Семейный доступ", accounts), info("Единый вход", accounts)
     ]),
-    page("Видео и аудио", "▶", "red", "Параметры изображения, звука и звуков интерфейса.", [
+    page("Видео и аудио", "Параметры изображения, звука и звуков интерфейса.", [
+      group("Видео"),
       info("Формат видео и HDR", picture), info("Согласование диапазона и частоты кадров", picture),
       info("Цветовой баланс и калибровка", picture), info("Подключение HDMI", "На Samsung проверьте параметры HDMI выбранного источника."),
+      group("Аудио"),
       info("Выход аудио", audio), info("Формат аудио и Dolby Atmos", audio),
       info("Уменьшение громких звуков", audio), option("navigationClicks"), option("transitionSounds"),
       info("Язык звука и субтитры", "Дорожки и субтитры выбираются в проигрывателе или приложении, которое воспроизводит видео.")
     ]),
-    page("Пульты и устройства", "▤", "violet", "Управление с пульта, Bluetooth и внешние устройства.", [
+    page("Заставка", "Заставка и фон главного экрана.", [
+      info("Заставки Samsung", "Доступны из системного меню на поддерживаемых моделях Samsung."),
+      option("artwork")
+    ]),
+    page("Уведомления", "Уведомления телевизора и приложений.", [
+      info("Уведомления приложений", "Параметры уведомлений находятся в соответствующем приложении или в меню Samsung."),
+      info("AppleTvSamsung", "Приложение показывает сообщения об открытии плиток внутри текущего экрана.")
+    ]),
+    page("AirPlay и Apple Home", "Трансляция на телевизор и управление доступом.", [
+      info("AirPlay", airplay), info("Код и доступ", airplay),
+      info("Субтитры AirPlay", airplay), info("Сопряжённые устройства", airplay),
+      info("Дом и комната", "Настройки Apple Home доступны в приложении «Дом» на поддерживаемом устройстве Apple.")
+    ]),
+    page("Пульты и устройства", "Управление с пульта, Bluetooth и внешние устройства.", [
       option("wrapFocus"), info("Кнопки пульта", "Стрелки перемещают фокус. OK открывает пункт. «Назад» возвращает на предыдущий экран."),
       info("Bluetooth", "Сопряжение наушников и других аксессуаров выполняется в системном меню Samsung."),
       info("Пульты и контроллеры", general + " Найдите параметры внешних устройств."),
       info("Управление телевизором и ресивером", "Параметры HDMI-CEC у Samsung называются Anynet+."),
       info("Регулировка громкости", "Кнопки громкости регулируют системный звук Samsung.")
     ]),
-    page("Приложения", "▦", "blue", "Параметры списка и отдельных приложений.", [
-      option("alphabetical"), app,
-      info("Автоматическое обновление", "Автообновление установленных приложений настраивается в Apps телевизора."),
-      info("Apple TV, Музыка и Фото", "Параметры каждого сервиса открываются внутри соответствующего приложения.")
-    ]),
-    page("AirPlay и Apple Home", "△", "green", "Трансляция на телевизор и управление доступом.", [
-      info("AirPlay", airplay), info("Код и доступ", airplay),
-      info("Субтитры AirPlay", airplay), info("Сопряжённые устройства", airplay),
-      info("Дом и комната", "Настройки Apple Home доступны в приложении «Дом» на поддерживаемом устройстве Apple.")
-    ]),
-    page("Siri и поиск", "✦", "violet", "Голосовой помощник, диктовка и поиск.", [
-      info("Siri", "Siri относится к системе Apple TV. Голосовой помощник Samsung настраивается в меню телевизора, если доступен."),
-      info("Диктовка и распознавание голоса", nativeTv),
-      info("Поиск", "Поиск по каталогу доступен внутри приложения нужного сервиса.")
-    ]),
-    page("Универсальный доступ", "♿", "blue", "Читаемость, визуальное выделение и системные функции доступности.", [
+    page("Универсальный доступ", "Читаемость, визуальное выделение и системные функции доступности.", [
       option("largeText"), option("strongFocus"), option("reduceMotion"),
       info("VoiceOver и голосовые подсказки", accessibility),
       info("Увеличение, контраст и фильтры", accessibility),
       info("Субтитры и аудиоописание", accessibility),
       info("Управление переключателями и быстрые команды", accessibility)
     ]),
-    page("Сеть", "⌁", "blue", "Состояние подключения и параметры Wi-Fi.", [
+    page("Приложения", "Параметры списка и отдельных приложений.", [
+      option("alphabetical"), app,
+      info("Автоматическое обновление", "Автообновление установленных приложений настраивается в Apps телевизора."),
+      info("Apple TV, Музыка и Фото", "Параметры каждого сервиса открываются внутри соответствующего приложения.")
+    ]),
+    app,
+    page("Сеть", "Состояние подключения и параметры Wi-Fi.", [
       info("Состояние подключения", "Это состояние сетевого интерфейса по данным браузера.", function () { return navigator.onLine ? "Подключено" : "Нет сети"; }),
       info("Wi-Fi и Ethernet", network), info("IP, DNS и прокси", network),
       info("Проверка сети", network + " Выберите «Состояние сети».")
     ]),
-    page("Система", "◉", "", "Версии, обновление и обслуживание устройства.", [
+    page("Система", "Версии, обновление и обслуживание устройства.", [
       about, info("Обновление ПО", updates), info("Перезапуск", nativeTv),
       info("Сброс телевизора", "Системный сброс доступен в настройках Samsung и удаляет системные параметры."),
       reset
     ]),
-    page("Выкл. и таймер сна", "⏻", "", "Управление питанием выполняется с пульта Samsung.", [
+    page("Выкл. и таймер сна", "Управление питанием выполняется с пульта Samsung.", [
       info("Выключение", "Нажмите кнопку питания на пульте Samsung."),
       info("Таймер сна", general + " Найдите настройки таймера сна.")
     ])
@@ -174,13 +187,7 @@
 
   var stack = [];
   var close;
-
-  function showPreview(item) {
-    previewIcon.textContent = item.icon || "ⓘ";
-    previewIcon.setAttribute("data-tone", item.tone || "");
-    previewTitle.textContent = item.label;
-    previewText.textContent = item.description;
-  }
+  var pageAnimation;
 
   function valueOf(row) {
     if (row.option) {
@@ -190,43 +197,55 @@
     return typeof row.value === "function" ? row.value() : row.value || "›";
   }
 
-  function render() {
+  function render(direction) {
     var entry = stack[stack.length - 1];
     var current = entry.page;
-    var parent = stack[stack.length - 2];
-    parentLabel.hidden = !parent;
-    parentLabel.textContent = parent ? parent.page.label : "";
+    var isRoot = stack.length === 1;
     heading.textContent = current.label;
     list.textContent = "";
+    list.scrollTop = 0;
     list.hidden = !current.rows;
     detail.hidden = !!current.rows;
     detail.textContent = current.rows ? "" : current.description;
-    previewTitle.hidden = !current.rows;
-    previewText.hidden = !current.rows;
-    showPreview(current);
+    previewText.textContent = isRoot || !current.rows ? "" : current.description;
+    if (pageAnimation) pageAnimation.cancel();
+    if (direction && !preferences.reduceMotion && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      var panel = current.rows ? list : detail;
+      if (typeof panel.animate === "function") {
+        pageAnimation = panel.animate([
+          { transform: "translateX(" + (direction * 24) + "px)", opacity: .4 },
+          { transform: "translateX(0)", opacity: 1 }
+        ], { duration: 205, easing: "cubic-bezier(.21,.72,.24,1)" });
+      }
+    }
     if (!current.rows) {
       back.focus();
       return;
     }
 
-    current.rows.forEach(function (row, index) {
+    var buttons = [];
+    current.rows.forEach(function (row) {
+      if (row.group) {
+        var groupHeading = document.createElement("h2");
+        groupHeading.className = "settings-group";
+        groupHeading.textContent = row.group;
+        list.appendChild(groupHeading);
+        return;
+      }
+      var index = buttons.length;
       var button = document.createElement("button");
       var label = document.createElement("span");
       var value = document.createElement("span");
       button.type = "button";
       button.className = "setting-row";
       label.className = "setting-label";
-      if (row.icon) {
-        var icon = document.createElement("span");
-        icon.className = "setting-icon";
-        icon.setAttribute("aria-hidden", "true");
-        icon.setAttribute("data-tone", row.tone || "");
-        icon.textContent = row.icon;
-        label.appendChild(icon);
-      }
       label.appendChild(document.createTextNode(row.label));
       value.className = "setting-value";
       value.textContent = valueOf(row);
+      if (value.textContent === "›") {
+        value.classList.add("setting-chevron");
+        value.setAttribute("aria-hidden", "true");
+      }
       if (row.option) {
         button.setAttribute("data-option", row.option);
         if (typeof preferences[row.option] === "boolean") button.setAttribute("aria-pressed", preferences[row.option]);
@@ -235,7 +254,7 @@
       button.appendChild(value);
       button.onfocus = function () {
         entry.index = index;
-        showPreview(row);
+        if (!isRoot) previewText.textContent = row.description;
       };
       button.onclick = function () {
         if (row.option) {
@@ -248,22 +267,24 @@
           preferences = defaults();
           save();
           stack.push({page: info("Настройки сброшены", "Восстановлены значения AppleTvSamsung по умолчанию."), index: 0});
-          render();
+          render(1);
         } else {
           stack.push({page: row, index: 0});
-          render();
+          render(1);
         }
       };
+      buttons.push(button);
       list.appendChild(button);
     });
-    (list.children[entry.index] || back).focus();
+    (buttons[entry.index] || back).focus();
   }
 
   function goBack() {
     if (stack.length > 1) {
       stack.pop();
-      render();
+      render(-1);
     } else {
+      if (pageAnimation) pageAnimation.cancel();
       root.hidden = true;
       close();
     }
@@ -280,7 +301,7 @@
     },
     goBack: goBack,
     move: function (direction) {
-      var buttons = [back].concat(Array.prototype.slice.call(list.children));
+      var buttons = [back].concat(Array.prototype.slice.call(list.querySelectorAll("button")));
       var index = buttons.indexOf(document.activeElement);
       var next = buttons[index + direction];
       if (next) next.focus();
