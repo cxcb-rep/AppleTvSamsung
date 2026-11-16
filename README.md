@@ -20,3 +20,9 @@ window.appleTvSamsungSoundFiles = {
 ```
 
 The public source uses an empty sound map. Apple’s original audio is demonstrated in [Designing Sound at WWDC17](https://developer.apple.com/videos/play/wwdc2017/803/?time=1519).
+
+## Settings
+
+On the Home Screen, move to the rightmost tile and press Down, then OK. You can also open **Settings** from the app list. The menu follows the categories in the [Apple TV 4K guide](https://support.apple.com/en-gb/guide/tv/welcome/26/tvos).
+
+**AppleTvSamsung** settings are saved on the device. They control navigation clicks, transition effects, the Home Screen artwork, menu theme, startup screen, app ordering, focus wrapping, text size, and contrast. The app settings menu includes a confirmation step for restoring defaults. System entries explain where to find the corresponding Samsung controls when available.

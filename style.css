@@ -92,6 +92,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .has-artwork .all-apps:not(:focus):not(:hover) { color: transparent; }
 .all-apps:focus, .all-apps:hover { background: #0a1825; }
+#all-apps { right: auto; width: 74%; }
+.settings-shortcut { left: auto; right: 4%; width: 17%; }
+.gallery-actions { display: flex; }
+.gallery-actions button + button { margin-left: .6em; }
 .notice {
   position: absolute;
   top: 58%;
@@ -128,7 +132,104 @@ button { font: inherit; color: inherit; cursor: pointer; }
   gap: 1vw;
 }
 .applications button { text-align: left; overflow-wrap: break-word; }
+.settings {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+  gap: 5vw;
+  padding: 4.5% 6%;
+  background: radial-gradient(ellipse at 90% 65%, #34455d, transparent 64%), #111824;
+  font-size: 1.7vw;
+}
+.settings-menu { min-height: 0; min-width: 0; display: flex; flex-direction: column; }
+.settings-heading { display: flex; align-items: center; margin-bottom: 1em; min-height: 3.8em; }
+.settings-heading h1 { font-size: 2.1em; line-height: 1.03; margin: 0; letter-spacing: -.045em; }
+.settings-parent { margin: 0 0 .25em; font-size: .75em; opacity: .72; }
+.settings-back {
+  flex: 0 0 auto;
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: .36em;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(154, 172, 194, .19);
+  font-size: 1.8em;
+  line-height: 1;
+}
+.settings-list { min-height: 0; overflow: auto; padding: .2em .4em .2em .12em; }
+.settings-list::-webkit-scrollbar { width: 6px; }
+.settings-list::-webkit-scrollbar-thumb { border-radius: 6px; background: #8696ae88; }
+.settings-detail { margin: .35em 0 0; line-height: 1.6; }
+.setting-row {
+  display: flex;
+  width: 100%;
+  min-height: 2.9em;
+  align-items: center;
+  justify-content: space-between;
+  gap: .7em;
+  padding: .5em .75em;
+  border: 0;
+  border-radius: .62em;
+  background: transparent;
+  text-align: left;
+}
+.setting-row + .setting-row { margin-top: .13em; }
+.setting-row:focus, .settings-back:focus {
+  color: #142033;
+  background: #f4f7ff;
+  outline: 0;
+}
+.setting-label { display: flex; align-items: center; min-width: 0; gap: .65em; }
+.setting-value { font-size: .75em; opacity: .72; text-align: right; flex-shrink: 0; }
+.setting-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 1.55em;
+  height: 1.55em;
+  border-radius: .38em;
+  color: white;
+  background: #465f81;
+}
+.setting-icon[data-tone="blue"], .settings-symbol[data-tone="blue"] { background: #2875db; }
+.setting-icon[data-tone="violet"], .settings-symbol[data-tone="violet"] { background: #7253bd; }
+.setting-icon[data-tone="green"], .settings-symbol[data-tone="green"] { background: #187d69; }
+.setting-icon[data-tone="red"], .settings-symbol[data-tone="red"] { background: #b94e5d; }
+.settings-preview { align-self: center; text-align: center; padding: 1em; overflow-wrap: break-word; }
+.settings-preview h2 { font-size: 1.35em; margin: .85em 0 .35em; }
+.settings-preview p { font-size: .85em; line-height: 1.55; opacity: .78; margin: 0; }
+.settings-symbol {
+  display: inline-grid;
+  place-items: center;
+  width: 1.85em;
+  height: 1.85em;
+  border-radius: .42em;
+  background: #465f81;
+  color: #fff;
+  font-size: 4.6em;
+  box-shadow: inset 0 1px 0 #ffffff42, 0 .2em .5em #080c1855;
+}
+[data-menu-theme="light"] .settings, [data-menu-theme="light"] .gallery {
+  background: radial-gradient(ellipse at 90% 65%, #d0e0f3, #f3f6fc 73%);
+  color: #152338;
+}
+[data-menu-theme="light"] .gallery p { color: #36465b; }
+[data-menu-theme="light"] .gallery button { background: #e1e9f5; border-color: #9aadc5; }
+[data-menu-theme="light"] .setting-row:focus, [data-menu-theme="light"] .settings-back:focus {
+  background: #1f3554; color: #fff;
+}
+[data-large-text="true"] .settings { font-size: 1.96vw; }
+[data-large-text="true"] .gallery { font-size: 1.3em; }
+[data-strong-focus="true"] .tile:focus, [data-strong-focus="true"] .all-apps:focus,
+[data-strong-focus="true"] .gallery button:focus, [data-strong-focus="true"] .settings button:focus {
+  outline: 3px solid #ffd467;
+  outline-offset: 2px;
+}
 @media (max-width: 650px) {
   .gallery h1 { font-size: 18px; }
   .applications { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .settings { font-size: 12px; padding: 4% 5%; gap: 2vw; }
+  [data-large-text="true"] .settings { font-size: 14px; }
+  .settings-symbol { font-size: 3em; }
 }

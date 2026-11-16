@@ -6,6 +6,7 @@
   <title>AppleTvSamsung</title>
   <link rel="stylesheet" href="style.css">
   <script defer src="sound-files.js"></script>
+  <script defer src="settings.js"></script>
   <script defer src="app.js"></script>
 </head>
 <body>
@@ -25,15 +26,37 @@
         <button class="tile" type="button" data-app="fitness" aria-label="Фитнес"><span aria-hidden="true">◎</span></button>
       </div>
       <button id="all-apps" class="all-apps" type="button">Все приложения</button>
+      <button id="home-settings" class="all-apps settings-shortcut" type="button">Настройки</button>
       <p id="notice" class="notice" role="status" hidden></p>
     </section>
     <section id="gallery" class="gallery" aria-labelledby="gallery-title" hidden>
       <header>
         <h1 id="gallery-title">Приложения Samsung</h1>
-        <button id="back" type="button">Назад</button>
+        <div class="gallery-actions">
+          <button id="gallery-settings" type="button">Настройки</button>
+          <button id="back" type="button">Назад</button>
+        </div>
       </header>
       <p id="gallery-status" role="status"></p>
       <div id="applications" class="applications"></div>
+    </section>
+    <section id="settings" class="settings" aria-labelledby="settings-title" hidden>
+      <div class="settings-menu">
+        <div class="settings-heading">
+          <button id="settings-back" class="settings-back" type="button" aria-label="Назад">‹</button>
+          <div>
+            <p id="settings-parent" class="settings-parent" hidden></p>
+            <h1 id="settings-title">Настройки</h1>
+          </div>
+        </div>
+        <div id="settings-list" class="settings-list"></div>
+        <p id="settings-detail" class="settings-detail" hidden></p>
+      </div>
+      <aside class="settings-preview" aria-live="polite">
+        <span id="settings-symbol" class="settings-symbol" aria-hidden="true">⚙</span>
+        <h2 id="settings-description-title">Настройки</h2>
+        <p id="settings-description"></p>
+      </aside>
     </section>
   </main>
 </body>
