@@ -7,6 +7,22 @@ To preview the interface, open `index.html` in a browser. On a TV remote, naviga
 
 The tiles, clock, shelf, and focus animations are rendered in the app. The bundled background reconstructs the artwork from the [*Sugar* home screen in Apple's Apple TV 4K guide](https://support.apple.com/en-lb/guide/tv/atvb87e1c725/tvos). The full app grid uses a separate wallpaper. The Apple tiles use image regions from the [appearance guide](https://support.apple.com/en-sg/guide/tv/atvb46af4f11/tvos). The public source references Apple's image, and a TV build can use a local copy through `art/tvos-icons.css`. Each shortcut opens the corresponding installed app when Tizen allows it.
 
+## Local FaceTime tile
+
+The FaceTime tile pairs one phone with the TV through a QR code. Once you approve camera and microphone access on the phone, the TV plays the feed. This is a one-way local camera feed. Both devices must be able to reach the computer running the bridge on the same network. The phone connects over HTTPS, and the TV receives video and audio over a WebSocket on the home network. The bridge keeps the session in memory and ends it when either device disconnects.
+
+Use Python 3.11 or later and OpenSSL. Replace `192.168.1.10` with the computer's LAN address.
+
+```sh
+python -m pip install -r lan-call/requirements.txt
+python lan-call/provision.py --host 192.168.1.10 --state lan-call/state
+python lan-call/bridge.py --host 192.168.1.10 --state lan-call/state
+```
+
+Copy the generated `lan-call/state/call-config.js` into the TV package in place of the stub. Add `<access origin="http://192.168.1.10:8771"/>` to the package's `config.xml`. Allow TCP ports 8771 and 8772 from your local network if your computer's firewall blocks them. Keep the generated configuration, keys and certificates outside the published package source. Repeat provisioning and update the TV package if the computer's LAN address changes.
+
+Open the **FaceTime** tile and scan the QR code. The first connection requires the local certificate because the browser needs trusted HTTPS for the camera and microphone. The QR page provides the profile and instructions for iPhone and Android. On iPhone, enable full trust after installing the profile. [Apple's certificate trust instructions](https://support.apple.com/en-ie/102390)
+
 ## Navigation audio
 
 A build can play three local cues: `focus` when moving between tiles, `open` on selection, and `back` when returning from the app list. Set these keys to relative audio paths in `sound-files.js` and include your audio files in the package. For example:

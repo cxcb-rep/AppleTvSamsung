@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="art/tvos-icons.css">
   <script defer src="sound-files.js"></script>
+  <script defer src="call-config.js"></script>
+  <script defer src="call.js"></script>
   <script defer src="settings.js"></script>
   <script defer src="app.js"></script>
 </head>
@@ -43,6 +45,18 @@
         </div>
       </div>
       <p id="notice" class="notice" role="status" hidden></p>
+    </section>
+    <section id="lan-call" class="lan-call" aria-labelledby="call-title" hidden>
+      <header>
+        <h1 id="call-title">FaceTime</h1>
+        <button id="call-back" type="button">Назад</button>
+      </header>
+      <p id="call-status" role="status"></p>
+      <div class="call-media">
+        <img id="call-qr" alt="QR-код подключения телефона" hidden>
+        <canvas id="call-video" aria-label="Видео с камеры телефона" hidden></canvas>
+      </div>
+      <button id="call-retry" type="button" hidden>Новый QR-код</button>
     </section>
     <section id="gallery" class="gallery" aria-labelledby="gallery-title" hidden>
       <header>

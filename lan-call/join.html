@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="call-origin" content="__HTTPS_ORIGIN__">
+<title>FaceTime · AppleTvSamsung</title>
+<link rel="stylesheet" href="/phone.css">
+<script defer src="/join.js"></script>
+<main>
+  <h1>Камера для телевизора</h1>
+  <p>Подключите телефон к той же сети Wi‑Fi, что и Samsung.</p>
+  <a id="join" class="button" hidden>Подключиться</a>
+  <details>
+    <summary>Первое подключение</summary>
+    <p>Браузер открывает камеру и микрофон только на доверенной HTTPS-странице.</p>
+    <ol>
+      <li>На iPhone <a href="/call.mobileconfig">загрузите сертификат</a> и установите скачанный профиль в «Настройки → Основные → VPN и управление устройством».</li>
+      <li>В «Настройки → Основные → Об этом устройстве → Доверие сертификатам» включите доверие для AppleTvSamsung Local Call.</li>
+      <li>Вернитесь сюда и нажмите «Подключиться». Если код истёк, откройте FaceTime на телевизоре заново.</li>
+    </ol>
+    <p>На Android <a href="/call-ca.cer">загрузите сертификат</a> и установите как сертификат ЦС в настройках безопасности.</p>
+  </details>
+</main>
+</html>

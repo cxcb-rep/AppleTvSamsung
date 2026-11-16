@@ -5,6 +5,8 @@
   var home = document.getElementById("home");
   var gallery = document.getElementById("gallery");
   var settingsScreen = document.getElementById("settings");
+  var callScreen = document.getElementById("lan-call");
+  var lanCall = window.appleTvSamsungLanCall;
   var settings = window.appleTvSamsungSettings;
   var artwork = document.getElementById("artwork");
   var clock = document.getElementById("home-clock");
@@ -24,7 +26,6 @@
     tv: /^apple\s*tv(?:\+)?$/i,
     arcade: /^(?:apple\s+)?arcade$/i,
     photos: /^(?:photos|gallery|фото|галерея)$/i,
-    facetime: /^facetime$/i,
     music: /^apple\s*music$/i,
     fitness: /^(?:apple\s+)?fitness\+?$/i,
     localVideo: /^(?:my\s+video|мо[её]\s+видео)$/i,
@@ -74,7 +75,13 @@
   updateClock();
   window.setInterval(updateClock, 10000);
 
+  function setActiveTile(tile) {
+    lastTile = tile;
+    home.classList.toggle("apps-scrolled", bottomRow.indexOf(tile) !== -1);
+  }
+
   function focusTile(tile) {
+    setActiveTile(tile);
     tile.focus({preventScroll: true});
   }
 
@@ -132,10 +139,7 @@
   }
 
   tiles.forEach(function (tile) {
-    tile.addEventListener("focus", function () {
-      lastTile = tile;
-      home.classList.toggle("apps-scrolled", bottomRow.indexOf(tile) !== -1);
-    });
+    tile.addEventListener("focus", function () { setActiveTile(tile); });
     var pattern = names[tile.getAttribute("data-app")];
     if (!pattern) return;
     tile.addEventListener("click", function () {
@@ -198,6 +202,17 @@
 
   allApps.addEventListener("click", showGallery);
   back.addEventListener("click", showHome);
+  document.querySelector('[data-app="facetime"]').addEventListener("click", function (event) {
+    var origin = event.currentTarget;
+    playSound("open");
+    notice.hidden = true;
+    home.hidden = true;
+    lanCall.open(function () {
+      playSound("back");
+      home.hidden = false;
+      focusTile(origin);
+    });
+  });
 
   function showSettings(event) {
     var origin = event.currentTarget;
@@ -277,7 +292,8 @@
       if (!settingsScreen.hidden) {
         playSound("back");
         settings.goBack();
-      } else if (!gallery.hidden) showHome();
+      } else if (!callScreen.hidden) lanCall.close();
+      else if (!gallery.hidden) showHome();
       else if (home.classList.contains("previewing")) togglePreview();
       else if (!notice.hidden) notice.hidden = true;
       else if (platform) platform.getCurrentApplication().exit();
@@ -286,6 +302,10 @@
       if (!event.repeat) event.target.click();
     } else if (key >= 37 && key <= 40) {
       event.preventDefault();
+      if (!callScreen.hidden) {
+        lanCall.move(key);
+        return;
+      }
       if (!settingsScreen.hidden) {
         if (key === 37 && !event.repeat) document.getElementById("settings-back").click();
         else if (key === 39 && !event.repeat && document.activeElement.classList.contains("setting-row")) {
