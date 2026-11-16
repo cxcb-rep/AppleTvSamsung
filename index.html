@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AppleTvSamsung</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <main class="screen">
+    <section id="home" class="home" aria-label="Главный экран">
+      <div class="backdrop" aria-hidden="true">
+        <span>Sugar</span>
+        <img id="artwork" alt="" draggable="false" referrerpolicy="no-referrer"
+          src="https://help.apple.com/assets/6A0B92AC55AFD81B2E01CA2A/6A0B92B055AFD81B2E01CA30/en_US/99d30260802e5e08cd6ff2c8000468a5.png">
+      </div>
+      <div class="shelf" aria-label="Основные приложения">
+        <button class="tile" type="button" data-app="tv" aria-label="Apple TV"><span aria-hidden="true">tv</span></button>
+        <button class="tile" type="button" data-app="arcade" aria-label="Arcade"><span aria-hidden="true">●</span></button>
+        <button class="tile" type="button" data-app="photos" aria-label="Фото"><span aria-hidden="true">✿</span></button>
+        <button class="tile" type="button" data-app="facetime" aria-label="FaceTime"><span aria-hidden="true">▣</span></button>
+        <button class="tile" type="button" data-app="music" aria-label="Музыка"><span aria-hidden="true">♫</span></button>
+        <button class="tile" type="button" data-app="fitness" aria-label="Фитнес"><span aria-hidden="true">◎</span></button>
+      </div>
+      <button id="all-apps" class="all-apps" type="button">Все приложения</button>
+      <p id="notice" class="notice" role="status" hidden></p>
+    </section>
+    <section id="gallery" class="gallery" aria-labelledby="gallery-title" hidden>
+      <header>
+        <h1 id="gallery-title">Приложения Samsung</h1>
+        <button id="back" type="button">Назад</button>
+      </header>
+      <p id="gallery-status" role="status"></p>
+      <div id="applications" class="applications"></div>
+    </section>
+  </main>
+</body>
+</html>
