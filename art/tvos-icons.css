@@ -1,5 +1,7 @@
 /* Icon rectangles from the Apple TV 4K guide, laid out by the app. */
-:root { --tvos-icon-sheet: url("https://help.apple.com/assets/69CB07644893F0C51C05AF64/69CB07684893F0C51C05AF6A/en_GB/0aec0184760e2ac111756c0578f44794.png"); }
+.tile-frame::before {
+  background-image: url("https://help.apple.com/assets/69CB07644893F0C51C05AF64/69CB07684893F0C51C05AF6A/en_GB/0aec0184760e2ac111756c0578f44794.png");
+}
 [data-app="tv"] {
   --tile-art: "";
   --tile-x: 5.4108%;

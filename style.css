@@ -52,22 +52,36 @@ body {
   z-index: 1;
   top: 0; right: 0; bottom: 0; left: 0;
   pointer-events: none;
-  background:
+  --wallpaper:
     radial-gradient(ellipse at 20% 72%, #63634a, transparent 54%),
     radial-gradient(ellipse at 87% 24%, #395151, transparent 62%),
     radial-gradient(ellipse at 58% 16%, #56534f, transparent 57%),
     linear-gradient(155deg, #222b2c, #242922 68%, #18252a);
-  opacity: 0;
-  transition: opacity 420ms cubic-bezier(.2,.72,.2,1);
 }
 [data-menu-theme="light"] .apps-wallpaper {
-  background:
+  --wallpaper:
     radial-gradient(ellipse at 18% 67%, #949176, transparent 46%),
     radial-gradient(ellipse at 90% 31%, #758583, transparent 68%),
     radial-gradient(ellipse at 57% 25%, #656264, transparent 48%),
     linear-gradient(140deg,#5f7171,#454b40);
 }
-.apps-scrolled .apps-wallpaper { opacity: 1; }
+.apps-wallpaper::before, .apps-wallpaper::after {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: var(--wallpaper);
+  content: "";
+}
+.apps-wallpaper::before {
+  -webkit-mask-image: linear-gradient(transparent 64%, #000 79%);
+  opacity: 1;
+  transition: opacity 300ms ease;
+}
+.apps-wallpaper::after {
+  opacity: 0;
+  transition: opacity 420ms cubic-bezier(.2,.72,.2,1);
+}
+.apps-scrolled .apps-wallpaper::after { opacity: 1; }
+.previewing .apps-wallpaper::before { opacity: 0; }
 .hero-title {
   position: absolute;
   top: 5.5%;
@@ -175,7 +189,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
   z-index: 1;
   top: 0; right: 0; bottom: 0; left: 0;
   border-radius: inherit;
-  background: var(--tvos-icon-sheet) var(--tile-x) var(--tile-y) / var(--tile-size) no-repeat;
+  background-position: var(--tile-x) var(--tile-y);
+  background-size: var(--tile-size);
+  background-repeat: no-repeat;
   content: var(--tile-art, none);
   pointer-events: none;
 }

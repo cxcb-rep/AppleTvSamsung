@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets"
-        id="https://github.com/cxcb-rep/AppleTvSamsung" version="0.3.2" viewmodes="maximized">
+        id="https://github.com/cxcb-rep/AppleTvSamsung" version="0.3.3" viewmodes="maximized">
   <tizen:application id="TvShelf001.Home" package="TvShelf001" required_version="6.0"/>
   <content src="index.html"/>
   <name>AppleTvSamsung</name>
