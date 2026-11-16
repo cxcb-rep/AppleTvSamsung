@@ -13,20 +13,33 @@
   <main class="screen">
     <section id="home" class="home" aria-label="Главный экран">
       <div class="backdrop" aria-hidden="true">
-        <span>Sugar</span>
-        <img id="artwork" alt="" draggable="false" referrerpolicy="no-referrer"
-          src="https://help.apple.com/assets/6A0B92AC55AFD81B2E01CA2A/6A0B92B055AFD81B2E01CA30/en_US/99d30260802e5e08cd6ff2c8000468a5.png">
+        <img id="artwork" alt="" draggable="false" src="art/sugar.jpg">
       </div>
-      <div class="shelf" aria-label="Основные приложения">
-        <button class="tile" type="button" data-app="tv" aria-label="Apple TV"><span aria-hidden="true">tv</span></button>
-        <button class="tile" type="button" data-app="arcade" aria-label="Arcade"><span aria-hidden="true">●</span></button>
-        <button class="tile" type="button" data-app="photos" aria-label="Фото"><span aria-hidden="true">✿</span></button>
-        <button class="tile" type="button" data-app="facetime" aria-label="FaceTime"><span aria-hidden="true">▣</span></button>
-        <button class="tile" type="button" data-app="music" aria-label="Музыка"><span aria-hidden="true">♫</span></button>
-        <button class="tile" type="button" data-app="fitness" aria-label="Фитнес"><span aria-hidden="true">◎</span></button>
+      <h1 class="hero-title">Sugar</h1>
+      <time id="home-clock" class="home-clock"></time>
+      <button id="hero-preview" class="hero-preview" type="button" aria-expanded="false">
+        <span id="hero-preview-label">На весь экран</span>
+      </button>
+      <div class="shelf" aria-label="Приложения">
+        <div class="shelf-track">
+          <div class="tile-row favorites">
+            <button class="tile" type="button" data-app="tv" aria-label="Apple TV"><span class="tile-frame"><span class="tile-icon tv-icon" aria-hidden="true"><i></i>tv</span></span><span class="tile-name" aria-hidden="true">Apple TV</span></button>
+            <button class="tile" type="button" data-app="arcade" aria-label="Arcade"><span class="tile-frame"><span class="tile-icon arcade-icon" aria-hidden="true"><i></i></span></span><span class="tile-name" aria-hidden="true">Arcade</span></button>
+            <button class="tile" type="button" data-app="photos" aria-label="Фото"><span class="tile-frame"><span class="tile-icon photos-icon" aria-hidden="true"></span></span><span class="tile-name" aria-hidden="true">Фото</span></button>
+            <button class="tile" type="button" data-app="facetime" aria-label="FaceTime"><span class="tile-frame"><span class="tile-icon video-icon" aria-hidden="true"></span></span><span class="tile-name" aria-hidden="true">FaceTime</span></button>
+            <button class="tile" type="button" data-app="music" aria-label="Музыка"><span class="tile-frame"><span class="tile-icon symbol-icon music-icon" aria-hidden="true">♫</span></span><span class="tile-name" aria-hidden="true">Музыка</span></button>
+            <button class="tile" type="button" data-app="fitness" aria-label="Фитнес"><span class="tile-frame"><span class="tile-icon fitness-icon" aria-hidden="true"></span></span><span class="tile-name" aria-hidden="true">Фитнес</span></button>
+          </div>
+          <div class="tile-row utilities">
+            <button id="all-apps" class="tile" type="button" aria-label="Все приложения"><span class="tile-frame"><span class="tile-icon grid-icon" aria-hidden="true"></span></span><span class="tile-name" aria-hidden="true">Все приложения</span></button>
+            <button class="tile" type="button" data-app="localVideo" aria-label="Моё видео"><span class="tile-frame"><span class="tile-icon play-icon" aria-hidden="true"></span></span><span class="tile-name" aria-hidden="true">Моё видео</span></button>
+            <button class="tile" type="button" data-app="youtube" aria-label="YouTube"><span class="tile-frame"><span class="tile-icon youtube-icon" aria-hidden="true"></span></span><span class="tile-name" aria-hidden="true">YouTube</span></button>
+            <button class="tile" type="button" data-app="netflix" aria-label="Netflix"><span class="tile-frame"><span class="tile-icon symbol-icon netflix-icon" aria-hidden="true">N</span></span><span class="tile-name" aria-hidden="true">Netflix</span></button>
+            <button class="tile" type="button" data-app="browser" aria-label="Браузер"><span class="tile-frame"><span class="tile-icon compass-icon" aria-hidden="true"></span></span><span class="tile-name" aria-hidden="true">Браузер</span></button>
+            <button id="home-settings" class="tile" type="button" aria-label="Настройки"><span class="tile-frame"><span class="tile-icon symbol-icon gear-icon" aria-hidden="true">⚙</span></span><span class="tile-name" aria-hidden="true">Настройки</span></button>
+          </div>
+        </div>
       </div>
-      <button id="all-apps" class="all-apps" type="button">Все приложения</button>
-      <button id="home-settings" class="all-apps settings-shortcut" type="button">Настройки</button>
       <p id="notice" class="notice" role="status" hidden></p>
     </section>
     <section id="gallery" class="gallery" aria-labelledby="gallery-title" hidden>

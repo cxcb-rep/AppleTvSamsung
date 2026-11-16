@@ -1,11 +1,11 @@
 # AppleTvSamsung
 larp version of apple tv for samsung tvs
 
-A home screen prototype for Samsung Smart TVs running Tizen 6.0. The home screen has six app tiles. Press Down to browse the apps installed on your TV.
+A home screen prototype for Samsung Smart TVs running Tizen 6.0. The two rows of app tiles animate as you move between them. Press Up on the first row to expand the background, or Down to reveal the second row. Use **All Apps** on the second row to browse apps installed on the TV.
 
-To preview the interface, open `index.html` in a browser. On a TV remote, navigate with the arrow keys, OK, and Back. To run the project on a TV, create a Web Application project in Tizen Studio with the `tv-samsung` profile. Copy the HTML, CSS, JavaScript, and `config.xml` from this repository into the project, then run it on a connected TV using a Samsung signing profile.
+To preview the interface, open `index.html` in a browser. On a TV remote, navigate with the arrow keys, OK, and Back. To run the project on a TV, create a Web Application project in Tizen Studio with the `tv-samsung` profile. Copy the HTML, CSS, JavaScript, `art` directory, and `config.xml` from this repository into the project, then run it on a connected TV using a Samsung signing profile.
 
-The background and appearance of the first six tiles come from the [*Sugar* home screen in Apple's Apple TV 4K guide](https://support.apple.com/en-lb/guide/tv/atvb87e1c725/tvos). The image loads from Apple's server. A fallback screen provides the same controls if the image is unavailable. Each tile opens the corresponding installed app when Tizen allows it.
+The tiles, clock, shelf, and focus animations are rendered in the app. The bundled background reconstructs the artwork from the [*Sugar* home screen in Apple's Apple TV 4K guide](https://support.apple.com/en-lb/guide/tv/atvb87e1c725/tvos). Each app shortcut opens the corresponding installed app when Tizen allows it.
 
 ## Navigation audio
 
@@ -25,4 +25,4 @@ The public source uses an empty sound map. Apple’s original audio is demonstra
 
 On the Home Screen, move to the rightmost tile and press Down, then OK. You can also open **Settings** from the app list. The menu follows the categories in the [Apple TV 4K guide](https://support.apple.com/en-gb/guide/tv/welcome/26/tvos).
 
-**AppleTvSamsung** settings are saved on the device. They control navigation clicks, transition effects, the Home Screen artwork, menu theme, startup screen, app ordering, focus wrapping, text size, and contrast. The app settings menu includes a confirmation step for restoring defaults. System entries explain where to find the corresponding Samsung controls when available.
+**AppleTvSamsung** settings are saved on the device. They control navigation clicks, transition effects, the Home Screen artwork, menu theme, startup screen, app ordering, focus wrapping, text size, contrast, and reduced motion. The app settings menu includes a confirmation step for restoring defaults. System entries explain where to find the corresponding Samsung controls when available.

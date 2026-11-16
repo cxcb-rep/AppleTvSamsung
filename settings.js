@@ -20,7 +20,8 @@
     alphabetical: { label: "Сортировка приложений", values: [true, false], labels: ["По алфавиту", "Порядок ТВ"], description: "Меняет порядок плиток в списке приложений." },
     wrapFocus: { label: "Навигация по кругу", values: [false, true], labels: ["Выкл.", "Вкл."], description: "Позволяет перейти с последней плитки на первую и обратно." },
     largeText: { label: "Крупный текст", values: [false, true], labels: ["Выкл.", "Вкл."], description: "Увеличивает текст в настройках и списке приложений." },
-    strongFocus: { label: "Контрастная рамка", values: [false, true], labels: ["Выкл.", "Вкл."], description: "Выделяет выбранную кнопку жёлтой рамкой." }
+    strongFocus: { label: "Контрастная рамка", values: [false, true], labels: ["Выкл.", "Вкл."], description: "Выделяет выбранную кнопку жёлтой рамкой." },
+    reduceMotion: { label: "Уменьшение движения", values: [false, true], labels: ["Выкл.", "Вкл."], description: "Отключает анимацию фокуса, прокрутки полки и переходов приложения." }
   };
 
   function defaults() {
@@ -49,6 +50,7 @@
     html.setAttribute("data-menu-theme", preferences.theme);
     html.setAttribute("data-large-text", preferences.largeText);
     html.setAttribute("data-strong-focus", preferences.strongFocus);
+    html.setAttribute("data-reduce-motion", preferences.reduceMotion);
     document.dispatchEvent(new Event("apple-settings-change"));
   }
 
@@ -86,7 +88,7 @@
     info("Данные приложения", "Параметры AppleTvSamsung хранятся локально на этом устройстве.")
   ]);
   var about = page("Об устройстве", "ⓘ", "blue", "Сведения о приложении и среде запуска.", [
-    info("AppleTvSamsung", "Версия приложения, установленная на устройстве.", "0.2.0"),
+    info("AppleTvSamsung", "Версия приложения, установленная на устройстве.", "0.3.0"),
     info("Платформа", "Этот экран показывает среду, в которой открыт проект.", function () { return window.tizen ? "Samsung Tizen" : "Браузер"; }),
     info("Экран", "Размер экрана, который сообщает веб-движок, в логических пикселях.", function () { return screen.width + " × " + screen.height; }),
     info("Язык устройства", "Языковой код, который сообщает веб-движок.", function () { return navigator.language || "—"; }),
@@ -98,7 +100,7 @@
   var app = page("AppleTvSamsung", "▣", "blue", "Звук, оформление, управление и данные этого приложения.", [
     option("navigationClicks"), option("transitionSounds"), option("artwork"), option("theme"),
     option("homeOnStart"), option("alphabetical"), option("wrapFocus"), option("largeText"),
-    option("strongFocus"), about, reset
+    option("strongFocus"), option("reduceMotion"), about, reset
   ]);
   var main = page("Настройки", "⚙", "", "Параметры изображения, звука, управления и приложений.", [
     page("Основные", "⚙", "", "Заставка, оформление, язык, время и конфиденциальность.", [
@@ -148,7 +150,7 @@
       info("Поиск", "Поиск по каталогу доступен внутри приложения нужного сервиса.")
     ]),
     page("Универсальный доступ", "♿", "blue", "Читаемость, визуальное выделение и системные функции доступности.", [
-      option("largeText"), option("strongFocus"),
+      option("largeText"), option("strongFocus"), option("reduceMotion"),
       info("VoiceOver и голосовые подсказки", accessibility),
       info("Увеличение, контраст и фильтры", accessibility),
       info("Субтитры и аудиоописание", accessibility),

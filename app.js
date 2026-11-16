@@ -7,6 +7,9 @@
   var settingsScreen = document.getElementById("settings");
   var settings = window.appleTvSamsungSettings;
   var artwork = document.getElementById("artwork");
+  var clock = document.getElementById("home-clock");
+  var preview = document.getElementById("hero-preview");
+  var previewLabel = document.getElementById("hero-preview-label");
   var notice = document.getElementById("notice");
   var appList = document.getElementById("applications");
   var galleryStatus = document.getElementById("gallery-status");
@@ -15,13 +18,19 @@
   var gallerySettings = document.getElementById("gallery-settings");
   var back = document.getElementById("back");
   var tiles = Array.prototype.slice.call(document.querySelectorAll(".tile"));
+  var topRow = tiles.filter(function (tile) { return tile.parentNode.classList.contains("favorites"); });
+  var bottomRow = tiles.filter(function (tile) { return tile.parentNode.classList.contains("utilities"); });
   var names = {
     tv: /^apple\s*tv(?:\+)?$/i,
     arcade: /^(?:apple\s+)?arcade$/i,
     photos: /^(?:photos|gallery|фото|галерея)$/i,
     facetime: /^facetime$/i,
     music: /^apple\s*music$/i,
-    fitness: /^(?:apple\s+)?fitness\+?$/i
+    fitness: /^(?:apple\s+)?fitness\+?$/i,
+    localVideo: /^(?:my\s+video|мо[её]\s+видео)$/i,
+    youtube: /^youtube$/i,
+    netflix: /^netflix$/i,
+    browser: /^(?:internet|web browser|browser|интернет|браузер)$/i
   };
   var lastTile = tiles[0];
   var noticeTimeout;
@@ -55,6 +64,29 @@
   artwork.addEventListener("load", showArtwork);
   document.addEventListener("apple-settings-change", showArtwork);
   showArtwork();
+
+  var timeFormat = new Intl.DateTimeFormat("ru-RU", {hour: "2-digit", minute: "2-digit"});
+  function updateClock() {
+    var now = new Date();
+    clock.textContent = timeFormat.format(now);
+    clock.dateTime = now.toISOString();
+  }
+  updateClock();
+  window.setInterval(updateClock, 10000);
+
+  function focusTile(tile) {
+    tile.focus({preventScroll: true});
+  }
+
+  function togglePreview() {
+    var active = home.classList.toggle("previewing");
+    preview.setAttribute("aria-expanded", active);
+    previewLabel.textContent = active ? "Вернуться к приложениям" : "На весь экран";
+    playSound(active ? "open" : "back");
+    if (active) preview.focus({preventScroll: true});
+    else focusTile(lastTile);
+  }
+  preview.addEventListener("click", togglePreview);
 
   function feedback(message) {
     if (!gallery.hidden) {
@@ -100,10 +132,14 @@
   }
 
   tiles.forEach(function (tile) {
-    tile.addEventListener("focus", function () { lastTile = tile; });
+    tile.addEventListener("focus", function () {
+      lastTile = tile;
+      home.classList.toggle("apps-scrolled", bottomRow.indexOf(tile) !== -1);
+    });
+    var pattern = names[tile.getAttribute("data-app")];
+    if (!pattern) return;
     tile.addEventListener("click", function () {
       playSound("open");
-      var pattern = names[tile.getAttribute("data-app")];
       readApps(function (apps) {
         if (home.hidden) return;
         var match = apps && apps.find(function (app) { return pattern.test(app.name.trim()); });
@@ -157,7 +193,7 @@
     playSound("back");
     gallery.hidden = true;
     home.hidden = false;
-    lastTile.focus();
+    focusTile(lastTile);
   }
 
   allApps.addEventListener("click", showGallery);
@@ -171,7 +207,7 @@
     settings.open(function () {
       previousScreen.hidden = false;
       if (previousScreen === gallery && galleryApps) renderGallery();
-      origin.focus();
+      origin.focus({preventScroll: true});
     });
   }
 
@@ -182,13 +218,32 @@
     if (button) playSound(button.id === "settings-back" ? "back" : "open");
   }, true);
 
-  function moveOnShelf(index, direction) {
-    var next = index + direction;
-    if (settings.get("wrapFocus")) next = (next + tiles.length) % tiles.length;
-    if (tiles[next]) {
-      tiles[next].focus();
-      playSound("focus");
+  function moveOnShelf(key) {
+    if (home.classList.contains("previewing")) {
+      if (key === 40) togglePreview();
+      return;
     }
+    var current = document.activeElement;
+    var isBottom = bottomRow.indexOf(current) !== -1;
+    var row = isBottom ? bottomRow : topRow;
+    var index = row.indexOf(current);
+    if (index < 0) return;
+    var next;
+    if (key === 38 || key === 40) {
+      if (key === 38 && !isBottom) {
+        togglePreview();
+        return;
+      }
+      if (key === 40 && isBottom) return;
+      next = (isBottom ? topRow : bottomRow)[index];
+    } else {
+      var column = index + (key === 37 ? -1 : 1);
+      if (settings.get("wrapFocus")) column = (column + row.length) % row.length;
+      next = row[column];
+    }
+    if (!next) return;
+    focusTile(next);
+    playSound("focus");
   }
 
   function moveInGallery(key) {
@@ -223,6 +278,7 @@
         playSound("back");
         settings.goBack();
       } else if (!gallery.hidden) showHome();
+      else if (home.classList.contains("previewing")) togglePreview();
       else if (!notice.hidden) notice.hidden = true;
       else if (platform) platform.getCurrentApplication().exit();
     } else if (key === 13 && event.target.tagName === "BUTTON") {
@@ -245,18 +301,10 @@
         if (document.activeElement !== previous) playSound("focus");
         return;
       }
-      var index = tiles.indexOf(document.activeElement);
-      if (key === 40 && index === tiles.length - 1) {
-        homeSettings.focus();
-        playSound("focus");
-      } else if (key === 40 && index !== -1) showGallery();
-      else if (key === 38 && index === -1) lastTile.focus();
-      else if (key === 37 && document.activeElement === homeSettings) allApps.focus();
-      else if (key === 39 && document.activeElement === allApps) homeSettings.focus();
-      else if (index >= 0 && (key === 37 || key === 39)) moveOnShelf(index, key === 37 ? -1 : 1);
+      moveOnShelf(key);
     }
   });
 
-  if (settings.get("homeOnStart")) lastTile.focus();
+  if (settings.get("homeOnStart")) focusTile(lastTile);
   else showGallery(false);
 }());
