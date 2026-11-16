@@ -1,0 +1,62 @@
+/* Icon rectangles from the Apple TV 4K guide, laid out by the app. */
+:root { --tvos-icon-sheet: url("https://help.apple.com/assets/69CB07644893F0C51C05AF64/69CB07684893F0C51C05AF6A/en_GB/0aec0184760e2ac111756c0578f44794.png"); }
+[data-app="tv"] {
+  --tile-art: "";
+  --tile-x: 5.4108%;
+  --tile-y: 10.7720%;
+  --tile-size: 774.3243% 725.8427%;
+}
+[data-app="arcade"] {
+  --tile-art: "";
+  --tile-x: 23.1695%;
+  --tile-y: 10.7720%;
+  --tile-size: 769.1275% 725.8427%;
+}
+[data-app="photos"] {
+  --tile-art: "";
+  --tile-x: 40.9639%;
+  --tile-y: 10.7720%;
+  --tile-size: 764.0000% 725.8427%;
+}
+[data-app="facetime"] {
+  --tile-art: "";
+  --tile-x: 58.7763%;
+  --tile-y: 10.7720%;
+  --tile-size: 769.1275% 725.8427%;
+}
+[data-app="music"] {
+  --tile-art: "";
+  --tile-x: 76.6064%;
+  --tile-y: 10.7720%;
+  --tile-size: 764.0000% 725.8427%;
+}
+[data-app="fitness"] {
+  --tile-art: "";
+  --tile-x: 94.3831%;
+  --tile-y: 10.7720%;
+  --tile-size: 769.1275% 725.8427%;
+}
+#all-apps {
+  --tile-art: "";
+  --tile-x: 23.1695%;
+  --tile-y: 38.4892%;
+  --tile-size: 769.1275% 717.7778%;
+}
+[data-app="localVideo"] {
+  --tile-art: "";
+  --tile-x: 76.6064%;
+  --tile-y: 38.4892%;
+  --tile-size: 764.0000% 717.7778%;
+}
+[data-app="browser"] {
+  --tile-art: "";
+  --tile-x: 58.7763%;
+  --tile-y: 38.4892%;
+  --tile-size: 769.1275% 717.7778%;
+}
+#home-settings {
+  --tile-art: "";
+  --tile-x: 94.3831%;
+  --tile-y: 38.4892%;
+  --tile-size: 769.1275% 717.7778%;
+}

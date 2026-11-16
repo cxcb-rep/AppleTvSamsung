@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AppleTvSamsung</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="art/tvos-icons.css">
   <script defer src="sound-files.js"></script>
   <script defer src="settings.js"></script>
   <script defer src="app.js"></script>
@@ -15,6 +16,7 @@
       <div class="backdrop" aria-hidden="true">
         <img id="artwork" alt="" draggable="false" src="art/sugar.jpg">
       </div>
+      <div class="apps-wallpaper" aria-hidden="true"></div>
       <h1 class="hero-title">Sugar</h1>
       <time id="home-clock" class="home-clock"></time>
       <button id="hero-preview" class="hero-preview" type="button" aria-expanded="false">
@@ -34,7 +36,7 @@
             <button id="all-apps" class="tile" type="button" aria-label="Все приложения"><span class="tile-frame"><span class="tile-icon grid-icon" aria-hidden="true"></span></span><span class="tile-name" aria-hidden="true">Все приложения</span></button>
             <button class="tile" type="button" data-app="localVideo" aria-label="Моё видео"><span class="tile-frame"><span class="tile-icon play-icon" aria-hidden="true"></span></span><span class="tile-name" aria-hidden="true">Моё видео</span></button>
             <button class="tile" type="button" data-app="youtube" aria-label="YouTube"><span class="tile-frame"><span class="tile-icon youtube-icon" aria-hidden="true"></span></span><span class="tile-name" aria-hidden="true">YouTube</span></button>
-            <button class="tile" type="button" data-app="netflix" aria-label="Netflix"><span class="tile-frame"><span class="tile-icon symbol-icon netflix-icon" aria-hidden="true">N</span></span><span class="tile-name" aria-hidden="true">Netflix</span></button>
+            <button class="tile" type="button" data-app="netflix" aria-label="Netflix"><span class="tile-frame"><span class="tile-icon netflix-icon" aria-hidden="true"></span></span><span class="tile-name" aria-hidden="true">Netflix</span></button>
             <button class="tile" type="button" data-app="browser" aria-label="Браузер"><span class="tile-frame"><span class="tile-icon compass-icon" aria-hidden="true"></span></span><span class="tile-name" aria-hidden="true">Браузер</span></button>
             <button id="home-settings" class="tile" type="button" aria-label="Настройки"><span class="tile-frame"><span class="tile-icon symbol-icon gear-icon" aria-hidden="true">⚙</span></span><span class="tile-name" aria-hidden="true">Настройки</span></button>
           </div>

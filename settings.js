@@ -12,7 +12,7 @@
     navigationClicks: { label: "Щелчки навигации", values: [true, false], labels: ["Вкл.", "Выкл."], description: "Звук при перемещении фокуса между плитками и пунктами меню." },
     transitionSounds: { label: "Звуковые эффекты", values: [true, false], labels: ["Вкл.", "Выкл."], description: "Звуки при открытии разделов и возврате." },
     artwork: { label: "Фон Sugar", values: [true, false], labels: ["Вкл.", "Выкл."], description: "Показывает кадр Sugar на главном экране. При выключении используется градиент." },
-    theme: { label: "Оформление меню", values: ["dark", "light"], labels: ["Тёмное", "Светлое"], description: "Меняет оформление настроек и списка приложений." },
+    theme: { label: "Оформление меню", values: ["dark", "light"], labels: ["Тёмное", "Светлое"], description: "Меняет фон сетки приложений, настроек и списка приложений." },
     homeOnStart: { label: "Экран при запуске", values: [true, false], labels: ["Главный экран", "Все приложения"], description: "Выбирает, какой экран откроется первым." },
     alphabetical: { label: "Сортировка приложений", values: [true, false], labels: ["По алфавиту", "Порядок ТВ"], description: "Меняет порядок плиток в списке приложений." },
     wrapFocus: { label: "Навигация по кругу", values: [false, true], labels: ["Выкл.", "Вкл."], description: "Позволяет перейти с последней плитки на первую и обратно." },
@@ -89,7 +89,7 @@
     info("Данные приложения", "Параметры AppleTvSamsung хранятся локально на этом устройстве.")
   ]);
   var about = page("Об устройстве", "Сведения о приложении и среде запуска.", [
-    info("AppleTvSamsung", "Версия приложения, установленная на устройстве.", "0.3.1"),
+    info("AppleTvSamsung", "Версия приложения, установленная на устройстве.", "0.3.2"),
     info("Платформа", "Этот экран показывает среду, в которой открыт проект.", function () { return window.tizen ? "Samsung Tizen" : "Браузер"; }),
     info("Экран", "Размер экрана, который сообщает веб-движок, в логических пикселях.", function () { return screen.width + " × " + screen.height; }),
     info("Язык устройства", "Языковой код, который сообщает веб-движок.", function () { return navigator.language || "—"; }),

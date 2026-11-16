@@ -47,14 +47,27 @@ body {
   transition: opacity 340ms ease;
 }
 .apps-scrolled .backdrop img { transform: scale(1.085) translateY(-2.5%); }
-.apps-scrolled .backdrop::before {
+.apps-wallpaper {
   position: absolute;
   z-index: 1;
   top: 0; right: 0; bottom: 0; left: 0;
-  background: linear-gradient(0deg, #070b11f2, #070b1177 55%, transparent);
-  content: "";
-  animation: reveal 330ms ease both;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 20% 72%, #63634a, transparent 54%),
+    radial-gradient(ellipse at 87% 24%, #395151, transparent 62%),
+    radial-gradient(ellipse at 58% 16%, #56534f, transparent 57%),
+    linear-gradient(155deg, #222b2c, #242922 68%, #18252a);
+  opacity: 0;
+  transition: opacity 420ms cubic-bezier(.2,.72,.2,1);
 }
+[data-menu-theme="light"] .apps-wallpaper {
+  background:
+    radial-gradient(ellipse at 18% 67%, #949176, transparent 46%),
+    radial-gradient(ellipse at 90% 31%, #758583, transparent 68%),
+    radial-gradient(ellipse at 57% 25%, #656264, transparent 48%),
+    linear-gradient(140deg,#5f7171,#454b40);
+}
+.apps-scrolled .apps-wallpaper { opacity: 1; }
 .hero-title {
   position: absolute;
   top: 5.5%;
@@ -65,7 +78,7 @@ body {
   text-shadow: 0 .1em .45em #0006;
   transition: transform 360ms cubic-bezier(.2,.75,.2,1), opacity 260ms ease;
 }
-.apps-scrolled .hero-title { opacity: .65; transform: translateY(-.14em) scale(.9); transform-origin: left; }
+.apps-scrolled .hero-title { opacity: 0; transform: translateY(-.45em); }
 .home-clock {
   position: absolute;
   top: 4.8%;
@@ -119,7 +132,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   transition: top 460ms cubic-bezier(.2,.76,.24,1), opacity 300ms ease, transform 400ms ease;
 }
 .shelf-track { display: flex; flex-direction: column; gap: 0; }
-.apps-scrolled .shelf { top: 47%; }
+.apps-scrolled .shelf { top: 3.1%; }
 .tile-row {
   display: flex;
   align-items: center;
@@ -135,6 +148,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   backdrop-filter: blur(10px) saturate(122%);
 }
 .utilities { margin-top: calc(1.8 * var(--u)); }
+.apps-scrolled .utilities { margin-top: calc(2.9 * var(--u)); }
 .tile {
   position: relative;
   width: 14.3%;
@@ -155,6 +169,15 @@ button { font: inherit; color: inherit; cursor: pointer; }
   background: var(--tile-color, linear-gradient(#252b36, #10141b));
   box-shadow: inset 0 1px 0 #ffffff2e, 0 .26em .55em #0007;
   transition: box-shadow 245ms ease, filter 245ms ease;
+}
+.tile-frame::before {
+  position: absolute;
+  z-index: 1;
+  top: 0; right: 0; bottom: 0; left: 0;
+  border-radius: inherit;
+  background: var(--tvos-icon-sheet) var(--tile-x) var(--tile-y) / var(--tile-size) no-repeat;
+  content: var(--tile-art, none);
+  pointer-events: none;
 }
 .tile:focus { z-index: 2; outline: 0; transform: translateY(-.15em) scale(1.14); }
 .tile:focus .tile-frame {
@@ -185,15 +208,26 @@ button { font: inherit; color: inherit; cursor: pointer; }
 [data-app="fitness"] { --tile-color: linear-gradient(#303137, #111114); }
 #all-apps { --tile-color: linear-gradient(#f55b86, #c20d49); }
 [data-app="localVideo"] { --tile-color: linear-gradient(#28c8ff, #0578d8); }
-[data-app="youtube"] { --tile-color: linear-gradient(#b750cb, #632086); }
-[data-app="netflix"] { --tile-color: linear-gradient(#515158, #191a1d); }
+[data-app="youtube"] { --tile-color: linear-gradient(#fff, #ededf0); }
+[data-app="netflix"] { --tile-color: linear-gradient(#26262a, #09090b); }
 [data-app="browser"] { --tile-color: linear-gradient(#ffba4c, #f37e10); }
 #home-settings { --tile-color: linear-gradient(#aeb5c0, #737d8c); }
 .tile-icon { position: relative; display: block; width: calc(5.1 * var(--u)); height: calc(5.1 * var(--u)); }
 .symbol-icon { text-align: center; line-height: 1; color: white; font-size: calc(5.1 * var(--u)); }
 .music-icon { font-weight: 750; text-shadow: 0 1px .15em #9b174066; }
 .gear-icon { font-size: calc(4.5 * var(--u)); padding-top: .08em; }
-.netflix-icon { color: #ff2138; font: 900 calc(4.7 * var(--u))/1.1 Arial, sans-serif; }
+.netflix-icon {
+  width: calc(2.7 * var(--u));
+  height: calc(4.55 * var(--u));
+  background: linear-gradient(90deg,#a90018 0 27%,transparent 27% 73%,#c7001c 73% 100%);
+}
+.netflix-icon::before {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: linear-gradient(100deg,#a90016,#f3263b 48%,#da001d);
+  clip-path: polygon(0 0,30% 0,100% 100%,70% 100%);
+  content: "";
+}
 .tv-icon {
   display: flex; align-items: center; justify-content: center; width: auto; height: auto; gap: .14em;
   font: 750 calc(3.75 * var(--u))/1 "Segoe UI", Arial, sans-serif; letter-spacing: -.055em; color: #fafbff;
@@ -226,8 +260,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .grid-icon { width: calc(3.15 * var(--u)); height: calc(3.15 * var(--u)); background: radial-gradient(circle, #fff 52%, transparent 55%) 0 0 / 33.333% 33.333%; }
 .play-icon::before, .youtube-icon::before { position: absolute; content: ""; }
 .play-icon::before { top: 16%; left: 29%; width: 55%; height: 68%; background: white; clip-path: polygon(0 0,100% 50%,0 100%); }
-.youtube-icon { width: calc(4.5 * var(--u)); height: calc(3.2 * var(--u)); border-radius: .48em; background: #fff; }
-.youtube-icon::before { top: 26%; left: 41%; width: 30%; height: 48%; background: #b539c6; clip-path: polygon(0 0,100% 50%,0 100%); }
+.youtube-icon { width: calc(5.2 * var(--u)); height: calc(3.65 * var(--u)); border-radius: 23%; background: #ff0033; }
+.youtube-icon::before { top: 24%; left: 41%; width: 31%; height: 52%; background: #fff; clip-path: polygon(0 0,100% 50%,0 100%); }
 .compass-icon { width: calc(4.05 * var(--u)); height: calc(4.05 * var(--u)); border-radius: 50%; border: 2px solid #fff; }
 .compass-icon::before { position: absolute; top: 15%; left: 14%; width: 72%; height: 72%; background: #fff; clip-path: polygon(83% 3%,62% 61%,6% 92%,33% 34%); content: ""; }
 .previewing .shelf { pointer-events: none; visibility: hidden; opacity: 0; transform: translateY(18%); transition: opacity 300ms ease, transform 350ms ease, visibility 0s 350ms; }

@@ -5,7 +5,7 @@ A home screen prototype for Samsung Smart TVs running Tizen 6.0. The two rows of
 
 To preview the interface, open `index.html` in a browser. On a TV remote, navigate with the arrow keys, OK, and Back. To run the project on a TV, create a Web Application project in Tizen Studio with the `tv-samsung` profile. Copy the HTML, CSS, JavaScript, `art` directory, and `config.xml` from this repository into the project, then run it on a connected TV using a Samsung signing profile.
 
-The tiles, clock, shelf, and focus animations are rendered in the app. The bundled background reconstructs the artwork from the [*Sugar* home screen in Apple's Apple TV 4K guide](https://support.apple.com/en-lb/guide/tv/atvb87e1c725/tvos). Each app shortcut opens the corresponding installed app when Tizen allows it.
+The tiles, clock, shelf, and focus animations are rendered in the app. The bundled background reconstructs the artwork from the [*Sugar* home screen in Apple's Apple TV 4K guide](https://support.apple.com/en-lb/guide/tv/atvb87e1c725/tvos). The full app grid uses a separate wallpaper. The Apple tiles use image regions from the [appearance guide](https://support.apple.com/en-sg/guide/tv/atvb46af4f11/tvos). The public source references Apple's image, and a TV build can use a local copy through `art/tvos-icons.css`. Each shortcut opens the corresponding installed app when Tizen allows it.
 
 ## Navigation audio
 
