@@ -21,6 +21,25 @@
   };
   var lastTile = tiles[0];
   var noticeTimeout;
+  var soundFiles = window.appleTvSamsungSoundFiles || {};
+  var sounds = {};
+  Object.keys(soundFiles).forEach(function (name) {
+    var player = new Audio(soundFiles[name]);
+    player.preload = "auto";
+    sounds[name] = player;
+  });
+
+  function playSound(name) {
+    var player = sounds[name];
+    if (!player) return;
+    try {
+      player.currentTime = 0;
+      var playback = player.play();
+      if (playback) playback.catch(function () {});
+    } catch (error) {
+      // Audio playback should never block navigation.
+    }
+  }
 
   function showArtwork() {
     home.classList.add("has-artwork");
@@ -75,6 +94,7 @@
   tiles.forEach(function (tile) {
     tile.addEventListener("focus", function () { lastTile = tile; });
     tile.addEventListener("click", function () {
+      playSound("open");
       var pattern = names[tile.getAttribute("data-app")];
       readApps(function (apps) {
         if (!gallery.hidden) return;
@@ -86,6 +106,7 @@
   });
 
   function showGallery() {
+    playSound("open");
     notice.hidden = true;
     home.hidden = true;
     gallery.hidden = false;
@@ -103,7 +124,10 @@
         var button = document.createElement("button");
         button.type = "button";
         button.textContent = app.name;
-        button.addEventListener("click", function () { launch(app); });
+        button.addEventListener("click", function () {
+          playSound("open");
+          launch(app);
+        });
         appList.appendChild(button);
       });
       if (document.activeElement === back) appList.firstElementChild.focus();
@@ -111,6 +135,7 @@
   }
 
   function showHome() {
+    playSound("back");
     gallery.hidden = true;
     home.hidden = false;
     lastTile.focus();
@@ -156,14 +181,21 @@
     } else if (key >= 37 && key <= 40) {
       event.preventDefault();
       if (!gallery.hidden) {
+        var previous = document.activeElement;
         moveInGallery(key);
+        if (document.activeElement !== previous) playSound("focus");
         return;
       }
       var index = tiles.indexOf(document.activeElement);
       if (key === 40 && index !== -1) showGallery();
       else if (key === 38 && index === -1) lastTile.focus();
-      else if (key === 37 && index > 0) tiles[index - 1].focus();
-      else if (key === 39 && index >= 0 && index < tiles.length - 1) tiles[index + 1].focus();
+      else if (key === 37 && index > 0) {
+        tiles[index - 1].focus();
+        playSound("focus");
+      } else if (key === 39 && index >= 0 && index < tiles.length - 1) {
+        tiles[index + 1].focus();
+        playSound("focus");
+      }
     }
   });
 
